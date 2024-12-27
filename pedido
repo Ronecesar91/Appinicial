@@ -1,0 +1,79 @@
+# Lista para armazenar os pedidos
+pedidos = []
+
+
+def cadastrar_pedido():
+    print("\n--- Cadastro de Pedido ---")
+    nome_cliente = input("Digite o nome do cliente: ")
+    produto = input("Digite o nome do produto: ")
+    endereco = input("Digite o endereço de entrega: ")
+
+    # Criando o pedido como um dicionário
+    pedido = {
+        "id": len(pedidos) + 1,
+        "nome_cliente": nome_cliente,
+        "produto": produto,
+        "endereco": endereco,
+        "status": "Pendente"
+    }
+
+    pedidos.append(pedido)
+    print("Pedido cadastrado com sucesso!\n")
+
+
+def listar_pedidos():
+    print("\n--- Lista de Pedidos ---")
+    if not pedidos:
+        print("Nenhum pedido cadastrado.\n")
+        return
+
+    for pedido in pedidos:
+        print(f"ID: {pedido['id']}")
+        print(f"Cliente: {pedido['nome_cliente']}")
+        print(f"Produto: {pedido['produto']}")
+        print(f"Endereço: {pedido['endereco']}")
+        print(f"Status: {pedido['status']}")
+        print("-" * 20)
+
+
+def atualizar_status():
+    print("\n--- Atualizar Status do Pedido ---")
+    try:
+        id_pedido = int(input("Digite o ID do pedido: "))
+        pedido = next((p for p in pedidos if p["id"] == id_pedido), None)
+
+        if pedido:
+            novo_status = input("Digite o novo status (Pendente, Em entrega, Entregue): ")
+            pedido["status"] = novo_status
+            print("Status atualizado com sucesso!\n")
+        else:
+            print("Pedido não encontrado.\n")
+    except ValueError:
+        print("ID inválido. Tente novamente.\n")
+
+
+def menu():
+    while True:
+        print("\n--- Menu de Opções ---")
+        print("1. Cadastrar Pedido")
+        print("2. Listar Pedidos")
+        print("3. Atualizar Status do Pedido")
+        print("4. Sair")
+
+        opcao = input("Escolha uma opção: ")
+
+        if opcao == "1":
+            cadastrar_pedido()
+        elif opcao == "2":
+            listar_pedidos()
+        elif opcao == "3":
+            atualizar_status()
+        elif opcao == "4":
+            print("Saindo do sistema...")
+            break
+        else:
+            print("Opção inválida. Tente novamente.")
+
+
+# Iniciar o programa
+menu()
